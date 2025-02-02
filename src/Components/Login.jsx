@@ -1,57 +1,42 @@
-type="javascript"
-import React, { useState } from 'react';
-import { Link, useNavigate } from 'react-router-dom';
-import { signInWithEmailAndPassword, getAuth } from 'firebase/auth';
-import { getFirestore, doc, getDoc } from 'firebase/firestore';
+import React, { useEffect, useState } from 'react';
 import { auth } from '../firebase';
-import '../CSS_Components/Login.css';
+import { getDatabase, ref, get } from 'firebase/database';
+import { useNavigate } from 'react-router-dom';
 
-const Login = () => {
+const Dashboard = () => {
   const navigate = useNavigate();
-  const db = getFirestore();
-  const [error, setError] = useState('');
-  const [formData, setFormData] = useState({ correo: '', contrasena: '' });
+  const [user, setUser] = useState(null);
+  const [role, setRole] = useState('');
 
-  const handleChange = (e) => {
-    setFormData({ ...formData, [e.target.name]: e.target.value });
-  };
-
-  const handleSubmit = async (e) => {
-    e.preventDefault();
-    setError('');
-
-    try {
-      const userCredential = await signInWithEmailAndPassword(
-        auth,
-        formData.correo,
-        formData.contrasena
-      );
-      
-      const userDoc = await getDoc(doc(db, 'users', userCredential.user.uid));
-      if (userDoc.exists()) {
-        const userData = userDoc.data();
-        localStorage.setItem('userRole', userData.role);
-        navigate('/dashboard');
+  useEffect(() => {
+    const fetchUserRole = async () => {
+      const user = auth.currentUser;
+      if (user) {
+        setUser(user);
+        const db = getDatabase();
+        const userRef = ref(db, 'users/' + user.uid);
+        const snapshot = await get(userRef);
+        if (snapshot.exists()) {
+          setRole(snapshot.val().role);
+        }
       } else {
-        setError('Usuario sin rol asignado');
+        navigate('/login');
       }
-    } catch (error) {
-      setError('Error al iniciar sesión');
-    }
-  };
+    };
+
+    fetchUserRole();
+  }, [navigate]);
 
   return (
-    <div className="login-container">
-      <h1>Bienvenido</h1>
-      <form onSubmit={handleSubmit}>
-        <input type="email" name="correo" placeholder="Correo" onChange={handleChange} required />
-        <input type="password" name="contrasena" placeholder="Contraseña" onChange={handleChange} required />
-        <button type="submit">Iniciar Sesión</button>
-      </form>
-      {error && <p>{error}</p>}
-      <p>¿No tienes una cuenta? <Link to="/registro">Regístrate</Link></p>
+    <div>
+      <h1>Dashboard</h1>
+      <p>Bienvenido, {user?.email} ({role})</p>
+
+      {role === 'admin' && <button>Administrar Usuarios</button>}
+      {role === 'user' && <p>Acceso normal</p>}
+      {role === 'social' && <p>Acceso con beneficios del plan social</p>}
     </div>
   );
 };
 
-export default Login;
+export default Dashboard;

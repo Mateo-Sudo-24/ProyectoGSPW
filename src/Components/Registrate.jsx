@@ -1,26 +1,24 @@
 import React, { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { createUserWithEmailAndPassword } from 'firebase/auth';
+import { getDatabase, ref, set } from 'firebase/database'; // Importar Realtime Database
 import { auth } from '../firebase';
-import '../CSS_Components/Registrate.css';
 
 const Registrate = () => {
   const navigate = useNavigate();
+  const db = getDatabase(); // Conectar con Realtime Database
   const [error, setError] = useState('');
   const [formData, setFormData] = useState({
     nombres: '',
     apellidos: '',
     correo: '',
     contrasena: '',
-    confirmarContrasena: ''
+    confirmarContrasena: '',
+    role: 'user' // Rol por defecto
   });
 
   const handleChange = (e) => {
-    const { name, value } = e.target;
-    setFormData(prevState => ({
-      ...prevState,
-      [name]: value
-    }));
+    setFormData({ ...formData, [e.target.name]: e.target.value });
   };
 
   const handleSubmit = async (e) => {
@@ -33,126 +31,44 @@ const Registrate = () => {
     }
 
     try {
-      const userCredential = await createUserWithEmailAndPassword(
-        auth,
-        formData.correo,
-        formData.contrasena
-      );
-      console.log('Usuario creado:', userCredential.user);
+      const userCredential = await createUserWithEmailAndPassword(auth, formData.correo, formData.contrasena);
+      const user = userCredential.user;
+
+      // Guardar datos en Realtime Database con el rol seleccionado
+      set(ref(db, 'users/' + user.uid), {
+        nombres: formData.nombres,
+        apellidos: formData.apellidos,
+        email: formData.correo,
+        role: formData.role
+      });
+
       navigate('/login');
     } catch (error) {
-      switch (error.code) {
-        case 'auth/email-already-in-use':
-          setError('Este correo ya está registrado');
-          break;
-        case 'auth/invalid-email':
-          setError('Correo electrónico inválido');
-          break;
-        case 'auth/weak-password':
-          setError('La contraseña debe tener al menos 6 caracteres');
-          break;
-        default:
-          setError('Error al crear la cuenta');
-      }
+      setError('Error al crear la cuenta');
     }
   };
 
   return (
     <div className="registro-container">
-      <div className="registro-form">
-        <img 
-          src="../ImagenesP/Logo1.png"
-          alt="Logo"
-          className="logo-image"
-        />
-        
-        <h1>Únete a AcademyBEE</h1>
-        <p className="registro-subtitulo">
-          Conecta con la comunidad de AcademyBEE y comienza a aprender
-        </p>
+      <h1>Únete a AcademyBEE</h1>
+      <form onSubmit={handleSubmit}>
+        <input type="text" name="nombres" placeholder="Nombres" onChange={handleChange} required />
+        <input type="text" name="apellidos" placeholder="Apellidos" onChange={handleChange} required />
+        <input type="email" name="correo" placeholder="Correo" onChange={handleChange} required />
+        <input type="password" name="contrasena" placeholder="Contraseña" onChange={handleChange} required />
+        <input type="password" name="confirmarContrasena" placeholder="Confirmar Contraseña" onChange={handleChange} required />
 
-        {error && (
-          <p className="error-message" style={{ color: 'red', textAlign: 'center' }}>
-            {error}
-          </p>
-        )}
+        <label>Rol:</label>
+        <select name="role" onChange={handleChange} value={formData.role}>
+          <option value="user">Usuario</option>
+          <option value="admin">Administrador</option>
+          <option value="social">Plan Social</option>
+        </select>
 
-        <form onSubmit={handleSubmit}>
-          <div className="form-row">
-            <div className="form-group">
-              <label htmlFor="nombres">Nombres</label>
-              <input
-                type="text"
-                id="nombres"
-                name="nombres"
-                value={formData.nombres}
-                onChange={handleChange}
-                required
-              />
-            </div>
-
-            <div className="form-group">
-              <label htmlFor="apellidos">Apellidos</label>
-              <input
-                type="text"
-                id="apellidos"
-                name="apellidos"
-                value={formData.apellidos}
-                onChange={handleChange}
-                required
-              />
-            </div>
-          </div>
-
-          <div className="form-group">
-            <label htmlFor="correo">Correo</label>
-            <input
-              type="email"
-              id="correo"
-              name="correo"
-              value={formData.correo}
-              onChange={handleChange}
-              required
-            />
-          </div>
-
-          <div className="form-row">
-            <div className="form-group">
-              <label htmlFor="contrasena">Contraseña</label>
-              <input
-                type="password"
-                id="contrasena"
-                name="contrasena"
-                value={formData.contrasena}
-                onChange={handleChange}
-                required
-                minLength="6"
-              />
-            </div>
-
-            <div className="form-group">
-              <label htmlFor="confirmarContrasena">Confirmar Contraseña</label>
-              <input
-                type="password"
-                id="confirmarContrasena"
-                name="confirmarContrasena"
-                value={formData.confirmarContrasena}
-                onChange={handleChange}
-                required
-                minLength="6"
-              />
-            </div>
-          </div>
-
-          <button type="submit" className="crear-cuenta-btn">
-            Crear Cuenta
-          </button>
-        </form>
-
-        <p className="login-link">
-          ¿Ya tienes una cuenta? <Link to="/login">Inicia Sesión</Link>
-        </p>
-      </div>
+        <button type="submit">Crear Cuenta</button>
+      </form>
+      {error && <p>{error}</p>}
+      <p>¿Ya tienes una cuenta? <Link to="/login">Inicia Sesión</Link></p>
     </div>
   );
 };
