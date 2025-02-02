@@ -31,7 +31,7 @@ const Footer = () => {
         </div>
 
         <div className="footer-copyright">
-          © 2024 Poli-Trade. Todos los derechos reservados.
+          © 2024 Todos los derechos reservados.
         </div>
       </div>
     </div>

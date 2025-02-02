@@ -13,18 +13,14 @@ const Quiensomos = () => {
           <div className="mision">
             <h2>MISIÓN</h2>
             <p>
-              Facilitar el intercambio y la venta de productos entre los estudiantes 
-              de la Escuela Politécnica Nacional, promoviendo una comunidad solidaria, 
-              práctica y accesible.
+              [Añadir misión aquí]
             </p>
             <img src="/ImagenesP/Mision.PNG" alt="Búho" className="mascot-image" />
           </div>
           <div className="vision">
             <h2>VISIÓN</h2>
             <p>
-              Ser la plataforma líder en la Escuela Politécnica Nacional para el 
-              comercio interno, reconocida por su impacto positivo en la vida 
-              estudiantil y su contribución al desarrollo sostenible.
+              [Añadir visión aquí]
             </p>
             <img src="/ImagenesP/Vision_epn.PNG" alt="Robot" className="mascot-image" />
           </div>

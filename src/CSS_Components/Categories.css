@@ -67,7 +67,7 @@
 }
 
 .category-name {
-    color: #DC2626;
+    color: yellow;
     font-size: 1.25rem;
     margin-bottom: 1rem;
     font-weight: bold;
@@ -86,7 +86,7 @@
 
 .category-content li:before {
     content: "•";
-    color: #DC2626;
+    color: yellow;
     display: inline-block;
     width: 1em;
     margin-left: -1em;

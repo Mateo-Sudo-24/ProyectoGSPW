@@ -1,10 +1,10 @@
 import React from 'react';
 import Carousel from './carrusel';
 
-const Articulo_carrusel = ({ id, titulo, infoGeneral, procesoCompra, productos }) => {
+const Curso_carrusel = ({ id, titulo, infoGeneral, procesoCompra, productos }) => {
   return (
-    <section className="categoria" id={id}>
-      <h2 className="categoria-titulo">{titulo}</h2>
+    <section className="curso" id={id}>
+      <h2 className="curso-titulo">{titulo}</h2>
 
       <div className="info-container">
         {/* Información General */}
@@ -19,7 +19,7 @@ const Articulo_carrusel = ({ id, titulo, infoGeneral, procesoCompra, productos }
 
         {/* Proceso de Compra */}
         <div className="info-section">
-          <h3>Proceso de Compra</h3>
+          <h3>Proceso de Inscripción</h3>
           <ul>
             {procesoCompra.map((item, index) => (
               <li key={index}>{item}</li>
@@ -34,5 +34,4 @@ const Articulo_carrusel = ({ id, titulo, infoGeneral, procesoCompra, productos }
   );
 };
 
-export default Articulo_carrusel ;
-
+export default Curso_carrusel;

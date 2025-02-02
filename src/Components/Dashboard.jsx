@@ -7,10 +7,10 @@ import '../CSS_Components/Dashboard.css';
 const Dashboard = () => {
   const navigate = useNavigate();
   const [user, setUser] = useState(null);
-  const [publicaciones, setPublicaciones] = useState([]);
-  const [allPublicaciones, setAllPublicaciones] = useState([]);
+  const [cursos, setCursos] = useState([]);
+  const [allCursos, setAllCursos] = useState([]);
   const [busqueda, setBusqueda] = useState('');
-  const [nuevaPublicacion, setNuevaPublicacion] = useState({
+  const [nuevoCurso, setNuevoCurso] = useState({
     titulo: '',
     descripcion: '',
     precio: '',
@@ -23,8 +23,8 @@ const Dashboard = () => {
     const unsubscribe = auth.onAuthStateChanged((user) => {
       if (user) {
         setUser(user);
-        cargarPublicaciones();
-        cargarTodasLasPublicaciones();
+        cargarCursos();
+        cargarTodosLosCursos();
       } else {
         navigate('/login');
       }
@@ -32,25 +32,25 @@ const Dashboard = () => {
     return () => unsubscribe();
   }, [navigate]);
 
-  const cargarPublicaciones = async () => {
+  const cargarCursos = async () => {
     try {
       const querySnapshot = await getDocs(
-        query(collection(db, 'publicaciones'), where('userId', '==', auth.currentUser.uid))
+        query(collection(db, 'cursos'), where('userId', '==', auth.currentUser.uid))
       );
       const docs = querySnapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
-      setPublicaciones(docs);
+      setCursos(docs);
     } catch (error) {
-      console.error('Error al cargar publicaciones:', error);
+      console.error('Error al cargar cursos:', error);
     }
   };
 
-  const cargarTodasLasPublicaciones = async () => {
+  const cargarTodosLosCursos = async () => {
     try {
-      const querySnapshot = await getDocs(collection(db, 'publicaciones'));
+      const querySnapshot = await getDocs(collection(db, 'cursos'));
       const docs = querySnapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
-      setAllPublicaciones(docs);
+      setAllCursos(docs);
     } catch (error) {
-      console.error('Error al cargar todas las publicaciones:', error);
+      console.error('Error al cargar todos los cursos:', error);
     }
   };
 
@@ -63,50 +63,50 @@ const Dashboard = () => {
     }
   };
 
-  const crearPublicacion = async (e) => {
+  const crearCurso = async (e) => {
     e.preventDefault();
     try {
-      await addDoc(collection(db, 'publicaciones'), {
-        ...nuevaPublicacion,
+      await addDoc(collection(db, 'cursos'), {
+        ...nuevoCurso,
         userId: user.uid,
         userEmail: user.email,
         fecha: new Date().toISOString()
       });
-      setNuevaPublicacion({ titulo: '', descripcion: '', precio: '', categoria: '' });
-      cargarPublicaciones();
-      cargarTodasLasPublicaciones();
+      setNuevoCurso({ titulo: '', descripcion: '', precio: '', categoria: '' });
+      cargarCursos();
+      cargarTodosLosCursos();
     } catch (error) {
-      console.error('Error al crear publicación:', error);
+      console.error('Error al crear curso:', error);
     }
   };
 
-  const eliminarPublicacion = async (id) => {
+  const eliminarCurso = async (id) => {
     try {
-      await deleteDoc(doc(db, 'publicaciones', id));
-      cargarPublicaciones();
+      await deleteDoc(doc(db, 'cursos', id));
+      cargarCursos();
     } catch (error) {
-      console.error('Error al eliminar publicación:', error);
+      console.error('Error al eliminar curso:', error);
     }
   };
 
-  const actualizarPublicacion = async (e) => {
+  const actualizarCurso = async (e) => {
     e.preventDefault();
     try {
-      await updateDoc(doc(db, 'publicaciones', editando.id), {
-        ...nuevaPublicacion
+      await updateDoc(doc(db, 'cursos', editando.id), {
+        ...nuevoCurso
       });
       setEditando(null);
-      setNuevaPublicacion({ titulo: '', descripcion: '', precio: '', categoria: '' });
-      cargarPublicaciones();
+      setNuevoCurso({ titulo: '', descripcion: '', precio: '', categoria: '' });
+      cargarCursos();
     } catch (error) {
-      console.error('Error al actualizar publicación:', error);
+      console.error('Error al actualizar curso:', error);
     }
   };
 
-  const publicacionesFiltradas = allPublicaciones.filter(pub => 
-    pub.titulo.toLowerCase().includes(busqueda.toLowerCase()) ||
-    pub.descripcion.toLowerCase().includes(busqueda.toLowerCase()) ||
-    pub.categoria.toLowerCase().includes(busqueda.toLowerCase())
+  const cursosFiltrados = allCursos.filter(curso => 
+    curso.titulo.toLowerCase().includes(busqueda.toLowerCase()) ||
+    curso.descripcion.toLowerCase().includes(busqueda.toLowerCase()) ||
+    curso.categoria.toLowerCase().includes(busqueda.toLowerCase())
   );
 
   return (
@@ -124,7 +124,7 @@ const Dashboard = () => {
         <div className="search-section">
           <input
             type="text"
-            placeholder="Buscar publicaciones..."
+            placeholder="Buscar cursos..."
             value={busqueda}
             onChange={(e) => setBusqueda(e.target.value)}
             className="search-input"
@@ -134,15 +134,15 @@ const Dashboard = () => {
         <div className="dashboard-content">
           <div className="crud-section">
             <div className="crud-card">
-              <h2>Crear Publicación</h2>
-              <form onSubmit={editando ? actualizarPublicacion : crearPublicacion}>
+              <h2>Crear Curso</h2>
+              <form onSubmit={editando ? actualizarCurso : crearCurso}>
                 <div className="form-group">
                   <input
                     type="text"
                     name="titulo"
                     placeholder="Título"
-                    value={nuevaPublicacion.titulo}
-                    onChange={(e) => setNuevaPublicacion({...nuevaPublicacion, titulo: e.target.value})}
+                    value={nuevoCurso.titulo}
+                    onChange={(e) => setNuevoCurso({...nuevoCurso, titulo: e.target.value})}
                     className="form-input"
                     required
                   />
@@ -151,8 +151,8 @@ const Dashboard = () => {
                 <div className="form-group">
                   <textarea
                     placeholder="Descripción"
-                    value={nuevaPublicacion.descripcion}
-                    onChange={(e) => setNuevaPublicacion({...nuevaPublicacion, descripcion: e.target.value})}
+                    value={nuevoCurso.descripcion}
+                    onChange={(e) => setNuevoCurso({...nuevoCurso, descripcion: e.target.value})}
                     required
                   />
                 </div>
@@ -162,8 +162,8 @@ const Dashboard = () => {
                     type="number"
                     name="precio"
                     placeholder="Precio"
-                    value={nuevaPublicacion.precio}
-                    onChange={(e) => setNuevaPublicacion({...nuevaPublicacion, precio: e.target.value})}
+                    value={nuevoCurso.precio}
+                    onChange={(e) => setNuevoCurso({...nuevoCurso, precio: e.target.value})}
                     min="0"
                     step="0.01"
                     className="form-input"
@@ -173,50 +173,48 @@ const Dashboard = () => {
 
                 <div className="form-group">
                   <select
-                    value={nuevaPublicacion.categoria}
-                    onChange={(e) => setNuevaPublicacion({...nuevaPublicacion, categoria: e.target.value})}
+                    value={nuevoCurso.categoria}
+                    onChange={(e) => setNuevoCurso({...nuevoCurso, categoria: e.target.value})}
                     required
                   >
                     <option value="">Selecciona una categoría</option>
-                    <option value="herramientas">Herramientas</option>
-                    <option value="tecnologia">Tecnología</option>
-                    <option value="postres">Postres</option>
-                    <option value="accesorios">Accesorios</option>
-                    <option value="libros_ingles_basico">Libros de Inglés Básicos</option>
-                    <option value="libros_ingles_avanzado">Libros de Inglés Avanzado</option>
-                    <option value="libros_general">Libros en General</option>
+                    <option value="soldadura">Soldadura</option>
+                    <option value="matematicas">Matemáticas</option>
+                    <option value="alfabetizacion">Alfabetización</option>
+                    <option value="agricultura">Siembra y Agricultura</option>
+                    <option value="ofimatica">Uso de Ofimática</option>
                   </select>
                 </div>
 
                 <button type="submit" className="crud-button">
-                  {editando ? 'Actualizar' : 'Crear'} Publicación
+                  {editando ? 'Actualizar' : 'Crear'} Curso
                 </button>
               </form>
             </div>
 
             <div className="crud-card">
-              <h2>Publicaciones Disponibles</h2>
-              <div className="publicaciones-grid">
-                {publicacionesFiltradas.map((pub) => (
-                  <div key={pub.id} className="publicacion-item">
-                    <h3>{pub.titulo}</h3>
-                    <p>{pub.descripcion}</p>
-                    <p className="precio">Precio: ${parseFloat(pub.precio).toFixed(2)}</p>
-                    <p className="categoria">Categoría: {pub.categoria}</p>
-                    <p className="vendedor">Vendedor: {pub.userEmail}</p>
-                    {pub.userId === user?.uid && (
+              <h2>Cursos Disponibles</h2>
+              <div className="cursos-grid">
+                {cursosFiltrados.map((curso) => (
+                  <div key={curso.id} className="curso-item">
+                    <h3>{curso.titulo}</h3>
+                    <p>{curso.descripcion}</p>
+                    <p className="precio">Precio: ${parseFloat(curso.precio).toFixed(2)}</p>
+                    <p className="categoria">Categoría: {curso.categoria}</p>
+                    <p className="vendedor">Instructor: {curso.userEmail}</p>
+                    {curso.userId === user?.uid && (
                       <div className="buttons-container">
                         <button 
                           onClick={() => {
-                            setEditando(pub);
-                            setNuevaPublicacion(pub);
+                            setEditando(curso);
+                            setNuevoCurso(curso);
                           }}
                           className="edit-button"
                         >
                           Editar
                         </button>
                         <button 
-                          onClick={() => eliminarPublicacion(pub.id)}
+                          onClick={() => eliminarCurso(curso.id)}
                           className="delete-button"
                         >
                           Eliminar

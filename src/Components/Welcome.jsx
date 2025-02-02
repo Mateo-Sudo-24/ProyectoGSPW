@@ -12,28 +12,28 @@ const Welcome = () => {
   return (
     <section className="welcome-section">
       <div className="welcome-content">
-        <h1 className="main-title">Bienvenidos a Poli-Trade</h1>
-        <h2 className="subtitle">Comercio dentro de la Escuela Politécnica Nacional</h2>
+        <h1 className="main-title">Bienvenidos a AcademyBEE</h1>
+        <h2 className="subtitle">Educación y Capacitación para Todos</h2>
         
         <div className="description">
-          <p>Encuentra todo lo que necesitas dentro de la Escuela Politécnica Nacional:</p>
-          <p>desde libros de Inglés hasta gadgets tecnológicos y accesorios esenciales.</p>
+          <p>AcademyBEE se dedica a proporcionar educación y capacitación de alta calidad a personas de todas las edades y orígenes.</p>
+          <p>Ofrecemos cursos en soldadura, matemáticas, alfabetización, siembra y agricultura, y uso de ofimática, diseñados especialmente para comunidades rurales.</p>
         </div>
 
-        <h3 className="discover-text">¡Descubre las mejores ofertas de tus compañeros!</h3>
+        <h3 className="discover-text">¡Descubre cómo AcademyBEE puede transformar tu vida!</h3>
 
         <div className="stats-container">
           <div className="stat-item">
             <span className="stat-number">13k+</span>
-            <span className="stat-label">Estudiantes Politécnicos</span>
+            <span className="stat-label">Estudiantes Capacitados</span>
           </div>
           <div className="stat-item">
-            <span className="stat-number">25+</span>
-            <span className="stat-label">Carreras</span>
+            <span className="stat-number">50+</span>
+            <span className="stat-label">Cursos Disponibles</span>
           </div>
           <div className="stat-item">
-            <span className="stat-number">1962</span>
-            <span className="stat-label">Año de Fundación EPN</span>
+            <span className="stat-number">10+</span>
+            <span className="stat-label">Años de Experiencia</span>
           </div>
         </div>
 

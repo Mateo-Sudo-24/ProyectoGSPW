@@ -7,71 +7,71 @@ const Off = () => {
   const offers = [
     {
       image: '/ImagenesP/Off1.jpeg',
-      title: 'Alquier de Casilleros'
+      title: 'Curso de Soldadura'
     },
     {
       image: '/ImagenesP/Off2.jpg',
-      title: 'Inscripciones Abiertas'
+      title: 'Curso de Matemáticas'
     },
     {
       image: '/ImagenesP/Off3.PNG',
-      title: 'Audífonos Monster XKT20'
+      title: 'Curso de Alfabetización'
     },
     {
       image: '/ImagenesP/Off4.PNG',
-      title: 'Parlante Inalámbrico LENOVO K30'
+      title: 'Curso de Siembra y Agricultura'
     },
     {
       image: '/ImagenesP/Off5.PNG',
-      title: 'Parlante Inalámbrico LENOVO K30'
+      title: 'Curso de Uso de Ofimática'
     }
   ];
 
   const testimonials = [
     {
       name: 'Ana María',
-      career: 'Ingeniería en Sistemas',
-      comment: 'Encontré los libros que necesitaba a excelentes precios. La plataforma es muy fácil de usar y los vendedores son muy amables.'
+      career: 'Agricultora',
+      comment: 'El curso de alfabetización fue excelente. Ahora puedo leer y escribir mejor, lo que me ayuda en mi trabajo diario.'
     },
     {
       name: 'Carlos López',
-      career: 'Mecatrónica',
-      comment: 'Pude conseguir mis herramientas de laboratorio a mitad de precio. ¡Excelente iniciativa para los estudiantes!'
+      career: 'Soldador',
+      comment: 'El curso de soldadura fue muy completo, pero creo que podría incluir más ejemplos prácticos.'
     },
     {
       name: 'Diana Torres',
-      career: 'Química',
-      comment: 'Los materiales de segunda mano están en perfecto estado. Me ayudó mucho a ahorrar en este semestre.'
+      career: 'Agricultora',
+      comment: 'El curso de siembra y agricultura me ayudó a mejorar mis técnicas de cultivo. Sin embargo, el material de estudio podría ser más interactivo.'
     },
     {
       name: 'Juan Pérez',
-      career: 'Ingeniería Civil',
-      comment: 'El alquiler de casilleros es super conveniente. Ya no tengo que cargar todos mis materiales todo el día.'
+      career: 'Obrero',
+      comment: 'El curso de matemáticas fue muy útil y bien explicado. Me gustaría que incluyeran más ejercicios prácticos.'
     },
     {
       name: 'María Sánchez',
-      career: 'Ingeniería Ambiental',
-      comment: 'Los precios son muy accesibles y la comunidad es muy colaborativa. Me encanta el ambiente de intercambio entre estudiantes.'
+      career: 'Agricultora',
+      comment: 'El curso de gestión ambiental fue muy informativo. Me encantó la parte de estudios de caso.'
     },
     {
       name: 'Roberto Gómez',
-      career: 'Ingeniería Eléctrica',
-      comment: 'Excelente para encontrar calculadoras y equipos especializados. Me han sacado de apuros varias veces.'
+      career: 'Electricista',
+      comment: 'El curso de uso de ofimática fue muy detallado. Sin embargo, creo que el contenido podría ser más dinámico.'
     },
     {
       name: 'Valentina Ruiz',
-      career: 'Arquitectura',
-      comment: 'He podido vender materiales que ya no uso y comprar otros que necesito. Es una plataforma muy útil para reciclar recursos.'
+      career: 'Diseñadora',
+      comment: 'El curso de diseño arquitectónico fue increíble. Aprendí muchas técnicas nuevas.'
     },
     {
       name: 'Gabriel Mora',
-      career: 'Ingeniería en Software',
-      comment: 'Los gadgets tecnológicos están a muy buen precio. La comunicación con los vendedores es rápida y efectiva.'
+      career: 'Desarrollador de Software',
+      comment: 'El curso de desarrollo web fue muy completo. Me gustaría que incluyeran más proyectos prácticos.'
     },
     {
       name: 'Camila Vega',
-      career: 'Geología',
-      comment: 'He encontrado libros especializados que son difíciles de conseguir en otros lugares. ¡Muy recomendado!'
+      career: 'Geóloga',
+      comment: 'El curso de geología avanzada fue muy interesante. Sin embargo, creo que podrían mejorar los recursos visuales.'
     }
   ];
 

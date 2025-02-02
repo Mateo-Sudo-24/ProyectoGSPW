@@ -66,9 +66,9 @@ const Registrate = () => {
           className="logo-image"
         />
         
-        <h1>Únete a Poli Trade</h1>
+        <h1>Únete a AcademyBEE</h1>
         <p className="registro-subtitulo">
-          Conecta con la comunidad politécnica y comienza a comerciar
+          Conecta con la comunidad de AcademyBEE y comienza a aprender
         </p>
 
         {error && (

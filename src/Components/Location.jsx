@@ -12,13 +12,13 @@ const Location = () => {
             <div className="info-card">
               <i className="fas fa-map-marker-alt"></i>
               <h3>Dirección</h3>
-              <p>Ladrón de Guevara E11-253, Quito 170517</p>
-              <p>Escuela Politécnica Nacional</p>
+              <p>Usar una direccion Standard</p>
+              <p>Ubicacion Exacta</p>
             </div>
 
             <div className="info-card">
               <i className="fas fa-clock"></i>
-              <h3>Horario de Atención</h3>
+              <h3>Horario de Atención de servicio tecnico</h3>
               <p>Lunes a Viernes: 8:00 AM - 6:00 PM</p>
               <p>Sábados: 9:00 AM - 1:00 PM</p>
             </div>
